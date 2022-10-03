@@ -23,10 +23,9 @@ architecture behavior of fact32 is
             outputSel   : in STD_LOGIC;
             outputLd    : in STD_LOGIC;
             hold        : in STD_LOGIC;
-            numEqZero   : out STD_LOGIC;
+            numGtOne    : out STD_LOGIC;
             oflow       : out STD_LOGIC;
             cntLtNum    : out STD_LOGIC;
-            cntGtOne    : out STD_LOGIC;
             fact        : out STD_LOGIC_VECTOR (31 downto 0)
         );
     end component;
@@ -36,10 +35,9 @@ architecture behavior of fact32 is
             go          : in STD_LOGIC;
             clk         : in STD_LOGIC;
             clr         : in STD_LOGIC;
-            numEqZero   : in STD_LOGIC;
+            numGtOne    : in STD_LOGIC;
             oflow       : in STD_LOGIC;
             cntLtNum    : in STD_LOGIC;
-            cntGtOne    : in STD_LOGIC;
             multSel     : out STD_LOGIC;
             multLd      : out STD_LOGIC;
             outputSel   : out STD_LOGIC;
@@ -53,10 +51,9 @@ architecture behavior of fact32 is
     signal multLd : STD_LOGIC;
     signal outputSel : STD_LOGIC;
     signal outputLd : STD_LOGIC;
-    signal numEqZero : STD_LOGIC;
+    signal numGtOne : STD_LOGIC;
     signal oflow : STD_LOGIC;
     signal cntLtNum : STD_LOGIC;
-    signal cntGtOne : STD_LOGIC;
     signal hold     : STD_LOGIC;
 
     begin
@@ -70,10 +67,9 @@ architecture behavior of fact32 is
                 outputSel   => outputSel,
                 outputLd    => outputLd,
                 hold        => hold,
-                numEqZero   => numEqZero,
+                numGtOne    => numGtOne,
                 oflow       => oflow,
                 cntLtNum    => cntLtNum,
-                cntGtOne    => cntGtOne,
                 fact        => fact
             );
 
@@ -82,10 +78,9 @@ architecture behavior of fact32 is
                 go          => go,
                 clk         => clk,
                 clr         => clr,
-                numEqZero   => numEqZero,
+                numGtOne    => numGtOne,
                 oflow       => oflow,
                 cntLtNum    => cntLtNum,
-                cntGtOne    => cntGtOne,
                 multSel     => multSel,
                 multLd      => multLd,
                 outputSel   => outputSel,

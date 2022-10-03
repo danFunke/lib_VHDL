@@ -52,10 +52,13 @@ architecture tb of fact32_tb is
                 wait for (period);
                 clr_tb <= '0';
 
-                -- Input valid num, hit go
-                num_tb <= X"6";
+                -- Input value of 9 for num, hit go
+                num_tb <= X"9";
+
+                wait for (2 * period);
                 go_tb <= '1';
 
+                
                 wait;
         end process; -- test
 

@@ -12,10 +12,9 @@ entity fact32_dp is
         outputSel   : in STD_LOGIC;
         outputLd    : in STD_LOGIC;
         hold        : in STD_LOGIC;
-        numEqZero   : out STD_LOGIC;
+        numGtOne    : out STD_LOGIC;
         oflow       : out STD_LOGIC;
         cntLtNum    : out STD_LOGIC;
-        cntGtOne    : out STD_LOGIC;
         fact        : out STD_LOGIC_VECTOR (31 downto 0)
     );
 end fact32_dp;
@@ -80,13 +79,12 @@ architecture behavior of fact32_dp is
     signal tempOutput   : STD_LOGIC_VECTOR (31 downto 0);
 
     -- Define contants
-    constant zero_4b : STD_LOGIC_VECTOR (3 downto 0) := (others => '0');
     constant one_4b  : STD_LOGIC_VECTOR (3 downto 0) := X"1";
     constant twlv_4b : STD_LOGIC_VECTOR (3 downto 0) := X"C";
     constant one_32b : STD_LOGIC_VECTOR (31 downto 0) := X"00000001";
 
     begin
-        oflowComp : comparator
+        oflowComp    : comparator
             generic map (N => 4)
             port map (
                 x   => num,
@@ -94,12 +92,12 @@ architecture behavior of fact32_dp is
                 gt  => oflow
             );
         
-        numEqZeroComp : comparator
+        numGtOneComp : comparator
             generic map (N => 4)
             port map (
                 x   => num,
-                y   => zero_4b,
-                eq  => numEqZero
+                y   => one_4b,
+                gt  => numGtOne
             );
         
         cntLtNumComp : comparator
@@ -110,15 +108,7 @@ architecture behavior of fact32_dp is
                 lt  => cntLtNum
             );
 
-        cntGtOneComp : comparator
-            generic map (N => 4)
-            port map (
-                x   => cnt,
-                y   => one_4b,
-                gt  => cntGtOne
-            );
-
-        count : counter
+        count        : counter
             generic map (N => 4)
             port map (
                 clr => hold,
@@ -126,7 +116,7 @@ architecture behavior of fact32_dp is
                 q   => cnt 
             );
 
-        multMux : multiplexer
+        multMux      : multiplexer
             generic map (N => 32)
             port map (
                 x => one_32b,
@@ -135,7 +125,7 @@ architecture behavior of fact32_dp is
                 z => tempMult
             );
 
-        outputMux : multiplexer
+        outputMux    : multiplexer
             generic map (N => 32)
             port map (
                 x => one_32b,
@@ -144,7 +134,7 @@ architecture behavior of fact32_dp is
                 z => tempOutput
             );
         
-        multReg : reg
+        multReg      : reg
             generic map (N => 32)
             port map (
                 d    => tempMult,
@@ -154,7 +144,7 @@ architecture behavior of fact32_dp is
                 q    => mult
             );
 
-        outputReg : reg
+        outputReg    : reg
             generic map (N => 32)
             port map (
                 d    => tempOutput,
@@ -164,7 +154,7 @@ architecture behavior of fact32_dp is
                 q    => fact
             );
 
-        multiply : multiplier
+        multiply     : multiplier
             generic map (N => 32)
             port map (
                 x => mult,
