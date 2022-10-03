@@ -17,12 +17,12 @@ architecture behavior of counter is
 
     begin
         process(clk, clr)
-        begin
-            if clr = '1' then
-                count <= (others => '0');
-            elsif clk'event and clk = '1' then
-                count <= count + 1;
-            end if;
+            begin
+                if clr = '1' then
+                    count <= (others => '0');
+                elsif clk'event and clk = '1' then
+                    count <= count + 1;
+                end if;
         end process;
 
         q <= count;

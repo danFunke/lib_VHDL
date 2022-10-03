@@ -7,7 +7,7 @@ entity multiplier is
     port (
         x   : in STD_LOGIC_VECTOR (N - 1 downto 0);
         y   : in STD_LOGIC_VECTOR (N - 1 downto 0);
-        z   : in STD_LOGIC_VECTOR ((N * 2) - 1 downto 0);
+        z   : out STD_LOGIC_VECTOR ((N * 2) - 1 downto 0)
     );
 end multiplier;
 
