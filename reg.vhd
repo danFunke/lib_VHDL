@@ -24,4 +24,4 @@ architecture behavior of reg is
                     end if;
                 end if;
         end process;
-    end behavior;
+end behavior;
