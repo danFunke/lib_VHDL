@@ -1,6 +1,5 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.STD_LOGIC_ARITH.ALL;
 use WORK.OPCODES.ALL;
 
 entity Pcontrol is
@@ -56,7 +55,7 @@ architecture behavior of Pcontrol is
                 end case;
         end process C1;
 
-        C2: process(icode, current_state, BTN4)
+        C2: process(icode, current_state, BTN0)
             begin
                 fcode <= "000000"; msel <= "00"; pload <= '0'; tload <= '0';
                 nload <= '0'; digload <= '0'; pinc <= '1'; iload <= '0';
@@ -68,7 +67,7 @@ architecture behavior of Pcontrol is
                 if (current_state = exec) or (current_state = exec_fetch) then
                     case icode is
                         when nop =>
-                                null;                                            
+                            null;                                            
                         when dup =>
                             nload <= '1';	  	  	                                                                      
                         when plus =>
@@ -90,9 +89,11 @@ architecture behavior of Pcontrol is
                         when jmp =>
                             pload <= '1'; pinc <= '0';
                         when jb0LO =>
-                            pload <= not BTN0; pinc <= BTN0; 
+                            pload   <= not BTN0; 
+                            pinc    <= BTN0; 
                         when jb0HI =>
-                            pload <= BTN0; pinc <= not BTN0;   
+                            pload   <= BTN0; 
+                            pinc    <= not BTN0;   
                         when others => null;	  
                     end case;
                 end if;

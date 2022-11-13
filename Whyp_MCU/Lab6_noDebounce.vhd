@@ -30,11 +30,11 @@ architecture behavior of Lab6 is
     signal btn0     : STD_LOGIC;
     signal fcode    : STD_LOGIC_VECTOR (5 downto 0);
     signal msel     : STD_LOGIC_VECTOR (1 downto 0);
-    signal y        : STD_LOGIC_VECTOR (15 downto 0);
-    signal N        : STD_LOGIC_VECTOR (15 downto 0);
-    signal tin      : STD_LOGIC_VECTOR (15 downto 0);
-    signal T        : STD_LOGIC_VECTOR (15 downto 0);
-    signal xin      : STD_LOGIC_VECTOR (15 downto 0);
+    signal y        : STD_LOGIC_VECTOR (7 downto 0);
+    signal N        : STD_LOGIC_VECTOR (7 downto 0);
+    signal tin      : STD_LOGIC_VECTOR (7 downto 0);
+    signal T        : STD_LOGIC_VECTOR (7 downto 0);
+    signal xin      : STD_LOGIC_vECTOR (7 downto 0);
 
     begin
         -- Tie LED output to input switch state
@@ -67,21 +67,13 @@ architecture behavior of Lab6 is
                 q       => icode
             );
 
-        debounce : clock_pulse
-            port map (
-                inp => btn(0),
-                cclk => clk190,
-                clr => btn(3),
-                outp => btn0
-            );
-
         ctrl : Pcontrol
             port map (
                 icode => icode,
                 M       => M,
                 clr     => btn(3),
                 clk     => clk25,
-                BTN0    => btn0,
+                BTN0    => btn(0),
                 fcode   => fcode,
                 msel    => msel,
                 pinc    => pinc,
@@ -101,18 +93,18 @@ architecture behavior of Lab6 is
             );
 
         mux4 : mux
-            generic map (N => 16)
+            generic map (N => 8)
             port map(
                 a   => N,
                 b   => y,
-                c   => X"00" & sw(7 downto 0),
-                d   => M,
+                c   => sw(7 downto 0),
+                d   => M(7 downto 0),
                 sel => msel,
                 z   => tin
             );
 
         treg : reg
-            generic map (N => 16)
+            generic map (N => 8)
             port map (
                 d       => tin,
                 load    => tload,
@@ -122,7 +114,7 @@ architecture behavior of Lab6 is
             );
 
         nreg : reg
-            generic map (N => 16)
+            generic map (N => 8)
             port map (
                 d       => T,
                 load    => nload,
@@ -132,7 +124,7 @@ architecture behavior of Lab6 is
             );
 
         digreg : reg
-            generic map (N => 16)
+            generic map (N => 8)
             port map (
                 d       => T,
                 load    => digload,
@@ -151,12 +143,12 @@ architecture behavior of Lab6 is
         
         disp : x7segb8
             port map (
-                x       => X"0000" & xin,
-                clk     => mclk,
+                x       => X"000000" & xin,
+                clk     => clk190,
                 clr     => btn(3),
                 a_to_g  => a_to_g,
                 an      => an,
                 dp      => dp
             );
 
-end behavior; 
+end behavior;

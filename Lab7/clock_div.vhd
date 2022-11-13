@@ -6,7 +6,7 @@ entity clock_div is
     port (
         mclk    : in STD_LOGIC;
         clr     : in STD_LOGIC;
-        --clk190  : out STD_LOGIC;
+        clk190  : out STD_LOGIC;
         clk25   : out STD_LOGIC
     );
 end clock_div;
@@ -24,7 +24,7 @@ architecture behavior of clock_div is
                 end if;
         end process;
 
-        --clk190 <= q(17);
+        clk190 <= q(17);
         clk25 <= q(1);
 
 end behavior;

@@ -5,12 +5,12 @@ use work.opcodes.all;
 
 entity Prom6 is
     port (
-        addr: in STD_LOGIC_VECTOR (15 downto 0);
-        M: out STD_LOGIC_VECTOR (15 downto 0)
+        addr    : in STD_LOGIC_VECTOR (15 downto 0);
+        M       : out STD_LOGIC_VECTOR (15 downto 0)
     );
 end Prom6;
 
-architecture Prom6_arch of Prom6 is
+architecture behavior of Prom6 is
     -- Define internal signals, types and constants
     subtype tword is std_logic_vector(15 downto 0);
     type rom_array is array (NATURAL range <>) of tword;
@@ -39,4 +39,4 @@ architecture Prom6_arch of Prom6 is
                 M <= rom(j);
         end process;
 
-end Prom6_arch;
+end behavior;
